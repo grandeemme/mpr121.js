@@ -1,0 +1,26 @@
+{
+  "name": "mpr121.js",
+  "version": "1.0.0",  
+  "description": "mpr121 module",
+  "main": "lib/exports.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [
+"mpr121",
+    "wiringpi",
+    "gpio",
+    "raspberry",
+    "pi",
+    "raspberrypi",
+    "bcm2835"
+  ],
+  "author": "Mauro Miranda",
+  "contributors": [
+  ],
+  "license": "BSD"
+}
