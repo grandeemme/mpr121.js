@@ -2,7 +2,7 @@
   "name": "mpr121.js",
   "version": "1.0.0",  
   "description": "mpr121 module",
-  "main": "lib/exports.js",
+  "main": "main.js",
   "dependencies": {
       "wiring-pi": "2.1.0"
 },
