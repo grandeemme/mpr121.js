@@ -3,6 +3,10 @@
   "version": "1.0.0",  
   "description": "mpr121 module",
   "main": "lib/exports.js",
+  "dependencies": {
+      "wiring-pi": "2.1.0",
+
+},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
   },
