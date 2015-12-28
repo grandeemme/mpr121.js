@@ -22,7 +22,7 @@ Mpr121.prototype.start = function() {
   var self = this;
 
   console.log("Mpr121 initialize");
-  setup();
+  this.setup();
   // create gpio controller
 var  button = new Gpio(gpioInterrupt, 'in', 'falling');
 
