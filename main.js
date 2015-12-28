@@ -44,7 +44,7 @@ button.watch(function (err, value) {
     //
     var touched = ((MSB << 8) | LSB);
     // controllo i primi 8
-    for (int i = 0; i < 12; i++) {
+    for (i = 0; i < 12; i++) {
       if ((touched & (1 << i)) != 0x00) {
         if (!	self.	touchStates[i]) {
           // pin i was just touched
