@@ -1,7 +1,7 @@
 
 var raspi = require('raspi');
 var I2C = require('raspi-i2c').I2C;
-var Gpio = require('onoff').Gpio,
+var Gpio = require('onoff').Gpio;
 
 var constants = require('./const');
 
