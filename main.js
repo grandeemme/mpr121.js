@@ -1,6 +1,6 @@
 var i2c = require('i2c-bus');
 var Gpio = require('onoff').Gpio;
-var constants = require('./const').constants;
+var constants = require('./const');
 
 function Mpr121(address, i2cBus, touchThreshold, releaseRhreshold) {
 	this.address = address;
