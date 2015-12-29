@@ -1,7 +1,6 @@
 var i2c = require('i2c-bus');
 var Gpio = require('onoff').Gpio;
-
-var constants = require('./const');
+var constants = require('./const').constants;
 
 function Mpr121(address, i2cBus, touchThreshold, releaseRhreshold) {
 	this.address = address;
@@ -92,7 +91,8 @@ Mpr121.prototype.notifyPolling = function(electrode) {
 
 Mpr121.prototype.setup = function() {
 	if (!this.started) {
-		console.log("Mpr121 initialize - touch " + this.touchThreshold + " - release - " + this.releaseRhreshold);
+		console.log("Mpr121 initialize - touch " + this.touchThreshold
+				+ " - release - " + this.releaseRhreshold);
 		this.setRegister(constants.ELE_CFG, 0x00);
 
 		// Section A - Controls filtering when data is > baseline.

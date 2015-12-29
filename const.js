@@ -55,4 +55,6 @@ function Const() {
 	this.REL_THRESH = 0x0A;
 };
 
+Const.prototype.constants = new Const();
+
 module.exports = Const;
