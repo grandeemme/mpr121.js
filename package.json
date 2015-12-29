@@ -4,12 +4,11 @@
   "description": "mpr121 module",
   "main": "main.js",
   "dependencies": {
-      "raspi": "2.0.0",
-      "raspi-i2c": "2.1.0",
-      "onoff": "1.0.3"
+      "i2c-bus": ">=1.0.0",
+      "onoff": ">=1.0.3"
 },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test.js"
   },
   "repository": {
     "type": "git",

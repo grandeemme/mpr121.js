@@ -1,5 +1,4 @@
-var raspi = require('raspi');
-var I2C = require('raspi-i2c').I2C;
+var i2c = require('i2c-bus'),
 var Gpio = require('onoff').Gpio;
 
 var constants = require('./const');
@@ -11,7 +10,7 @@ function Mpr121(address, i2cBus, touchThreshold, releaseRhreshold) {
 	this.touchThreshold = touchThreshold || constants.TOU_THRESH;
 	this.releaseRhreshold = releaseRhreshold || constants.REL_THRESH;
 	this.touchStates = new Array(12);
-	this.device = new I2C();
+	this.device = i2c.openSync(i2cBus || 1);
 	this.started = false;
 }
 
@@ -40,10 +39,10 @@ Mpr121.prototype.startInterrupt = function(gpioInterrupt) {
 };
 
 Mpr121.prototype.read = function() {
-	var r1 = this.device.readSync(this.address, 0, 32);
-	var r2 = this.device.readSync(this.address, 32, 10);
-
-	var registers = Buffer.concat([ r1, r2 ], 42);
+	var self = this;
+	var registers = this.device.readSync(this.address, 0, 42);
+	
+	console.log("registers : " + registers);
 	// notifico la lettura dei registri
 	this.notifyPolling(registers);
 
