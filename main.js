@@ -19,7 +19,7 @@ Mpr121.prototype.startPolling = function() {
 	var self = this;
 	this.setup();
 	setInterval(function() {
-		self.read();
+		self.readAndNotify();
 	}, 100);
 };
 
@@ -32,26 +32,15 @@ Mpr121.prototype.startInterrupt = function(gpioInterrupt) {
 		if (err) {
 			throw err;
 		}
-		self.read();
+		self.readAndNotify();
 		// display pin state on console
 		console.log(" --> GPIO PIN STATE CHANGE:   = " + value);
 	});
 };
 
-Mpr121.prototype.read = function() {
-	var self = this;
-	var registers = new Buffer(42);
+Mpr121.prototype.readAndNotify = function() {
 
-	this.device.i2cReadSync(this.address, 42, registers);
-
-	console.log("registers : " + registers);
-	// notifico la lettura dei registri
-	this.notifyPolling(registers);
-
-	var LSB = registers[0];
-	var MSB = registers[1];
-	//
-	var touched = ((MSB << 8) | LSB);
+	var touched = this.readTouch();
 	// controllo i primi 8
 	for (i = 0; i < 12; i++) {
 		if ((touched & (1 << i)) != 0x00) {
@@ -70,7 +59,23 @@ Mpr121.prototype.read = function() {
 			this.touchStates[i] = false;
 		}
 	}
+};
 
+Mpr121.prototype.readFull = function() {
+	var registers = new Buffer(42);
+	this.device.i2cReadSync(this.address, 42, registers);
+};
+
+Mpr121.prototype.readTouch = function() {
+	var self = this;
+	var registers = new Buffer(2);
+	this.device.i2cReadSync(this.address, 2, registers);
+	console.log("registers : " + registers);
+
+	var LSB = registers[0];
+	var MSB = registers[1];
+	//
+	return ((MSB << 8) | LSB);
 };
 
 Mpr121.prototype.notifyTouch = function(electrode) {
@@ -87,7 +92,7 @@ Mpr121.prototype.notifyPolling = function(electrode) {
 
 Mpr121.prototype.setup = function() {
 	if (!this.started) {
-		console.log("Mpr121 initialize");
+		console.log("Mpr121 initialize - touch " + this.touchThreshold + " - release - " + this.releaseRhreshold);
 		this.setRegister(constants.ELE_CFG, 0x00);
 
 		// Section A - Controls filtering when data is > baseline.
