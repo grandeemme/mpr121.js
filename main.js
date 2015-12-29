@@ -1,4 +1,4 @@
-var i2c = require('i2c-bus'),
+var i2c = require('i2c-bus');
 var Gpio = require('onoff').Gpio;
 
 var constants = require('./const');
