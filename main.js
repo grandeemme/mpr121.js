@@ -40,9 +40,9 @@ Mpr121.prototype.startInterrupt = function(gpioInterrupt) {
 };
 
 Mpr121.prototype.read = function() {
-	var registers = self.device.readSync(address, 0, 42);
+	var registers = this.device.readSync(address, 0, 42);
 	// notifico la lettura dei registri
-	self.notifyPolling(reisters);
+	this.notifyPolling(reisters);
 
 	var LSB = registers[0];
 	var MSB = registers[1];
@@ -51,19 +51,19 @@ Mpr121.prototype.read = function() {
 	// controllo i primi 8
 	for (i = 0; i < 12; i++) {
 		if ((touched & (1 << i)) != 0x00) {
-			if (!self.touchStates[i]) {
+			if (!this.touchStates[i]) {
 				// pin i was just touched
-				self.notifyTouch(i);
+				this.notifyTouch(i);
 			} else {
 				// pin i is still being touched
 			}
-			self.touchStates[i] = true;
+			this.touchStates[i] = true;
 		} else {
 			if (touchStates[i]) {
-				self.notifyRelease(i);
+				this.notifyRelease(i);
 				// pin i is no longer being touched
 			}
-			self.touchStates[i] = false;
+			this.touchStates[i] = false;
 		}
 	}
 
