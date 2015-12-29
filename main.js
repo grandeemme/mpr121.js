@@ -42,7 +42,7 @@ Mpr121.prototype.read = function() {
 	var self = this;
 	var registers = new Buffer(42);
 
-	this.device.readSync(this.address, 42, registers);
+	this.device.i2cReadSync(this.address, 42, registers);
 
 	console.log("registers : " + registers);
 	// notifico la lettura dei registri
