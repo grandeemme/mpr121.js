@@ -62,7 +62,7 @@ Mpr121.prototype.read = function() {
 			}
 			this.touchStates[i] = true;
 		} else {
-			if (touchStates[i]) {
+			if (this.touchStates[i]) {
 				this.notifyRelease(i);
 				// pin i is no longer being touched
 			}
