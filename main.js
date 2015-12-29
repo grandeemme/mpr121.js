@@ -40,7 +40,10 @@ Mpr121.prototype.startInterrupt = function(gpioInterrupt) {
 };
 
 Mpr121.prototype.read = function() {
-	var registers = this.device.readSync(this.address, 0, 42);
+	var r1 = this.device.readSync(this.address, 0, 32);
+	var r2 = this.device.readSync(this.address, 32, 10);
+
+	var registers = Buffer.concat([ r1, r2 ], 42);
 	// notifico la lettura dei registri
 	this.notifyPolling(registers);
 
