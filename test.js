@@ -1,5 +1,8 @@
 var Mpr121 = require('./main');
 
-var mod = new Mpr121(0x5A, 1, 2);
+// Address, I2c Bus, Gipio interrupt
+var mod = new Mpr121(0x5A, 1, 7);
 
-mod.start();
+mod.setup();
+
+mod.read();
