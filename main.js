@@ -27,7 +27,7 @@ Mpr121.prototype.startInterrupt = function(gpioInterrupt) {
 	var self = this;
 	this.setup();
 	// create gpio controller
-	var button = new Gpio(gpioInterrupt, 'in', 'falling');
+	var button = new Gpio(gpioInterrupt, 'in', 'both');
 	button.watch(function(err, value) {
 		if (err) {
 			throw err;
