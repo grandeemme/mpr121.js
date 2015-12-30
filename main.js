@@ -32,28 +32,22 @@ Mpr121.prototype.startInterrupt = function(gpioInterrupt) {
 			throw err;
 		}
 		self.readAndNotify();
-		// display pin state on console
-		console.log(" --> GPIO PIN STATE CHANGE:   = " + value);
 	});
 };
 
 Mpr121.prototype.readAndNotify = function() {
-
 	var touched = this.readTouch();
-	// controllo i primi 8
 	for (i = 0; i < 12; i++) {
 		if ((touched & (1 << i)) != 0x00) {
 			if (!this.touchStates[i]) {
 				// pin i was just touched
 				this.notifyTouch(i);
-			} else {
-				// pin i is still being touched
-			}
+			} 
 			this.touchStates[i] = true;
 		} else {
 			if (this.touchStates[i]) {
-				this.notifyRelease(i);
 				// pin i is no longer being touched
+				this.notifyRelease(i);
 			}
 			this.touchStates[i] = false;
 		}
