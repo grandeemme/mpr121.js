@@ -63,8 +63,7 @@ Mpr121.prototype.readTouch = function() {
 	var self = this;
 	var registers = new Buffer(2);
 	this.device.i2cReadSync(this.address, 2, registers);
-	console.log("registers : " + registers);
-
+	
 	var LSB = registers[0];
 	var MSB = registers[1];
 	//
