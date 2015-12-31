@@ -17,9 +17,13 @@ function Mpr121(address, i2cBus, touchThreshold, releaseRhreshold) {
 Mpr121.prototype.startPolling = function(polling) {
 	var self = this;
 	this.setup();
-	setInterval(function() {
+	this.interval = setInterval(function() {
 		self.readFullAndNotify();
 	}, polling);
+};
+
+Mpr121.prototype.stopPolling = function(polling) {
+	clearInterval(this.interval);
 };
 
 Mpr121.prototype.startInterrupt = function(gpioInterrupt) {
