@@ -14,12 +14,12 @@ function Mpr121(address, i2cBus, touchThreshold, releaseRhreshold) {
 }
 
 // class methods
-Mpr121.prototype.startPolling = function() {
+Mpr121.prototype.startPolling = function(polling) {
 	var self = this;
 	this.setup();
 	setInterval(function() {
-		self.readAndNotify();
-	}, 100);
+		self.readFullAndNotify();
+	}, polling);
 };
 
 Mpr121.prototype.startInterrupt = function(gpioInterrupt) {
@@ -36,50 +36,69 @@ Mpr121.prototype.startInterrupt = function(gpioInterrupt) {
 };
 
 Mpr121.prototype.readAndNotify = function() {
-	var touched = this.readTouch();
+	var registers = new Buffer(2);
+	this.device.i2cReadSync(this.address, 2, registers);
+
+	var touched = this.decodeTouch(registers);
+	this.notifyTouch(touched);
+};
+
+Mpr121.prototype.notifyTouch = function(touched) {
 	for (i = 0; i < 12; i++) {
 		if ((touched & (1 << i)) != 0x00) {
 			if (!this.touchStates[i]) {
 				// pin i was just touched
-				this.notifyTouch(i);
-			} 
+				this.onTouch(i);
+			}
 			this.touchStates[i] = true;
 		} else {
 			if (this.touchStates[i]) {
 				// pin i is no longer being touched
-				this.notifyRelease(i);
+				this.onRelease(i);
 			}
 			this.touchStates[i] = false;
 		}
 	}
 };
 
-Mpr121.prototype.readFull = function() {
-	var registers = new Buffer(42);
-	this.device.i2cReadSync(this.address, 42, registers);
-};
-
-Mpr121.prototype.readTouch = function() {
-	var self = this;
-	var registers = new Buffer(2);
-	this.device.i2cReadSync(this.address, 2, registers);
-	
+Mpr121.prototype.decodeTouch = function(registers) {
 	var LSB = registers[0];
 	var MSB = registers[1];
 	//
 	return ((MSB << 8) | LSB);
 };
 
-Mpr121.prototype.notifyTouch = function(electrode) {
-	console.log("notifyTouch  " + electrode);
+Mpr121.prototype.decodeValues = function(registers) {
+	var values = new Array(12);
+	for (i = 4; i < 28; i = i + 2) {
+		var LSB = registers[i];
+		var MSB = registers[i + 1];
+		values[(i - 4) / 2] = ((MSB << 8) | LSB);
+	}
+	return values;
+};
+
+Mpr121.prototype.readFullAndNotify = function() {
+	var registers = new Buffer(42);
+	this.device.i2cReadSync(this.address, 42, registers);
+
+	var touched = this.decodeTouch(registers);
+	this.notifyTouch(touched);
+
+	var values = this.decodeValues(registers);
+	this.onRead(values);
+};
+
+Mpr121.prototype.onTouch = function(electrode) {
+	console.log("onTouch  " + electrode);
 }
 
-Mpr121.prototype.notifyRelease = function(electrode) {
-	console.log("notifyRelease  " + electrode);
+Mpr121.prototype.onRelease = function(electrode) {
+	console.log("onRelease  " + electrode);
 }
 
-Mpr121.prototype.notifyPolling = function(electrode) {
-	console.log("notifyPolling  " + electrode);
+Mpr121.prototype.onRead = function(values) {
+	console.log("onPolling  " + values);
 }
 
 Mpr121.prototype.setup = function() {
