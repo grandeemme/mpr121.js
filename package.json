@@ -8,7 +8,7 @@
       "onoff": ">=1.0.3"
 },
   "scripts": {
-    "test": "node test.js"
+    "test": "node test-polling.js"
   },
   "repository": {
     "type": "git",
