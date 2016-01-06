@@ -50,4 +50,4 @@ mod.startPolling(200);
 ```
 
 ##Schema
-![Schema](readme/mpr121_bb.png)
+![Schema](https://raw.githubusercontent.com/grandeemme/mpr121.js/master/readme/mpr121_bb.png)
