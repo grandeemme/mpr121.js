@@ -22,7 +22,7 @@ Mpr121.prototype.startPolling = function(polling) {
 	}, polling);
 };
 
-Mpr121.prototype.stopPolling = function(polling) {
+Mpr121.prototype.stopPolling = function() {
 	clearInterval(this.interval);
 };
 
@@ -94,15 +94,12 @@ Mpr121.prototype.readFullAndNotify = function() {
 };
 
 Mpr121.prototype.onTouch = function(electrode) {
-	console.log("onTouch  " + electrode);
 }
 
 Mpr121.prototype.onRelease = function(electrode) {
-	console.log("onRelease  " + electrode);
 }
 
 Mpr121.prototype.onRead = function(values) {
-	console.log("onPolling  " + values);
 }
 
 Mpr121.prototype.setup = function() {

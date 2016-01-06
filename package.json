@@ -1,6 +1,6 @@
 {
   "name": "mpr121.js",
-  "version": "0.1.0",  
+  "version": "1.0.0",
   "description": "mpr121 module",
   "main": "main.js",
   "dependencies": {
@@ -12,16 +12,16 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/grandeemme/mpr121.js.git"
   },
   "keywords": [
     "mpr121",
-    "wiringpi",
+    "onoff",
+    "i2c-bus",
     "gpio",
     "raspberry",
     "pi",
-    "raspberrypi",
-    "bcm2835"
+    "raspberrypi"
   ],
   "author": "Mauro Miranda",
   "contributors": [ ],
