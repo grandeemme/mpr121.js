@@ -6,7 +6,7 @@ Module for interaction between Raspberry Pi and mpr121 on Node.js
 npm install mpr121.js
 ```
 
-##Usage whit interrupt
+##Usage with interrupt
 ```javascript
 var Mpr121 = require('mpr121.js');
 
@@ -20,11 +20,11 @@ mod.onTouch = function(pin){
 mod.onRelease = function(pin){
   console.log("Pin" + pin + " was released");
 }
-// Gipio interrupt
+// GPIO interrupt
 mod.startInterrupt(4);
 ```
 
-##Usage whit polling
+##Usage with polling
 ```javascript
 var Mpr121 = require('mpr121.js');
 
